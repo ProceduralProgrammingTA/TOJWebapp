@@ -1,0 +1,32 @@
+<% breadcrumb :manage_task_test_cases %>
+<h1><%= @task.title %>のテストケース</h1>
+<%= link_to '新規ファイル追加', new_manage_task_test_case_path(@task), :class => 'btn btn-primary btn-lg', :style => 'width: 30%;'%>
+<div class="well">
+<%= markdown(@task.description).html_safe %>
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>ファイル名</th>
+    <th>変更日</th>
+    <th>テストケースの説明</th>
+    <th>編集</th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @test_cases.each do |test_case| %>
+  <tr>
+    <td><%= test_case.file_name %></td>
+    <td><%= test_case.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+    <td><%= test_case.memo %></td>
+    <td><%= link_to '編集', edit_manage_task_test_case_path(@task, test_case) %></td>
+    <td><%= link_to '削除', manage_task_test_case_path(@task, test_case), method: :delete, data: {confirm: '削除していいですか?'} %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
+<div class="alert alert-danger">
+  <strong>既にファイルが存在する問題の場合</strong>のみ利用する<br>
+  <%= link_to '旧ファイル読み込み', manage_task_load_file_path(@task), :class => 'btn btn-danger', :style => 'width: 30%;' %><br><br>
+</div>

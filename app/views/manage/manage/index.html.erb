@@ -1,0 +1,31 @@
+<% breadcrumb :manage_root %>
+<% if admin_signed_in? %>
+    <h1>管理者<%= current_admin.name %>としてログイン中</h1>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#tab_home" data-toggle="tab">アカウント管理</a>
+      </li>
+      <li>
+        <a href="#tab_prob" data-toggle="tab">授業</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="tab_home" class="tab-pane active">
+        <div class="container"><br>
+          <%= link_to '管理者情報編集', edit_admin_registration_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
+          <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, :class => 'btn btn-danger btn-lg', :style => 'width: 50%' %><br>
+        </div>
+      </div>
+      <div id="tab_prob" class="tab-pane">
+        <div class="container"><br>
+          <%= link_to '学生一覧', manage_students_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
+          <%= link_to '課題一覧', manage_tasks_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
+          <%= link_to '新規課題作成', new_manage_task_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
+          <%= link_to '新規学生登録', new_manage_student_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %>
+        </div>
+      </div>
+    </div>
+<% else %>
+    <h1>ログアウト</h1>
+    <%= link_to 'ログイン', new_admin_session_path, method: :get, :class => 'btn btn-success btn-lg'%><br>
+<% end %>

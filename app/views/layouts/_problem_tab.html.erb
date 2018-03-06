@@ -1,0 +1,47 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>タイトル</th>
+    <th>締め切り</th>
+    <th>提出時刻</th>
+    <th>実行結果</th>
+    <th>TAチェック</th>
+    <th></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tasks.each do |task| %>
+      <% #submission = task.submissions.first %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.deadline.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <% unless task.submission_id.nil? %>
+            <td><%= DateTime.parse(task.submission_created_at).strftime('%Y-%m-%d %H:%M:%S') %>
+            <td class="<%= task.submission_is_completed ? '' : 'submission-status'%>" data-submissionid="<%= task.submission_id %>"
+              data-taskid="<%= task.id %>"><%=
+              if task.submission_status.nil?
+                task.submission_is_accepted ? 'AC' : 'WA'
+              else
+                task.submission_status
+              end
+            %></td>
+            <% case task.submission_ta_check %>
+        <% when 0 then %>
+                <td>未チェック</td>
+            <% when 1 then %>
+                <td>遅刻OK</td>
+            <% when 2 then %>
+                <td>OK</td>
+            <% end %>
+        <% else %>
+            <td></td>
+            <td></td>
+            <td></td>
+        <% end %>
+        <td><%= link_to '提出する', task %></td>
+        <td><%= link_to '提出履歴', task_submissions_path(task) %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>

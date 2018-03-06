@@ -1,0 +1,32 @@
+<% breadcrumb :student_root %>
+<% if student_signed_in? %>
+    <h1><%= current_student.name %> としてログイン中</h1>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#tab_home" data-toggle="tab">ホーム</a>
+      </li>
+      <li>
+        <a href="#tab_prob" data-toggle="tab">課題</a>
+      </li>
+      <li>
+        <a href="#tab_reports" data-toggle="tab">レポート提出</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div id="tab_home" class="tab-pane active"><br>
+        <%= link_to 'パスワードの変更', edit_student_registration_path, :class => 'btn btn-primary btn-lg', :style => 'width: 30%;'%><br><br>
+        <%= link_to 'ログアウト', destroy_student_session_path, method: :delete, :class => 'btn btn-danger btn-lg', :style => 'width: 30%'%><br>
+      </div>
+      <div id="tab_prob" class="tab-pane"><br>
+        <%= render partial: 'layouts/problem_tab' %>
+      </div>
+      <div id="tab_reports" class="tab-pane"><br>
+        <%= render partial: 'layouts/report_tab' %>
+      </div>
+    </div>
+<% else %>
+    <h1>ログアウト中</h1>
+    <p>演習サイトに入るためにはログインをしてください</p>
+    <%= link_to 'ログイン', new_student_session_path, method: :get %><br>
+<% end %>

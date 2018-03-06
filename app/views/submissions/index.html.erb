@@ -1,0 +1,33 @@
+<% breadcrumb :student_task_submissions %>
+<h3><%= @task.title %>提出履歴</h3>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>実行結果</th>
+    <th>提出日時</th>
+    <th>TAのコメント</th>
+    <th>TAチェック</th>
+    <th>詳細</th>
+  </tr>
+  </thead>
+  <% unless @submissions.nil? %>
+      <tbody>
+          <% @submissions.each do |submission| %>
+          <tr>
+            <%= show_status_td submission %>
+            <td><%= submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <td><%= submission.ta_comment %></td>
+            <% case submission.ta_check %>
+            <% when 0 then %>
+                <td>未チェック</td>
+            <% when 1 then %>
+                <td>遅刻OK</td>
+            <% when 2 then %>
+                <td>OK</td>
+            <% end %>
+            <td><%= link_to '詳細', task_submission_path(@task, submission) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+  <% end %>
+</table>

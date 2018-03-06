@@ -1,0 +1,36 @@
+<% breadcrumb :edit_manage_student_report %>
+<h1><%= @report.task_title %></h1><br>
+<h2>レポート提出状況</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>課題タイトル</th>
+    <th>提出日</th>
+    <th>学生コメント</th>
+    <th>フィードバック</th>
+    <th colspan="2"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><%= @report.task_title %></td>
+    <td><%= @report.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+    <td><%= @report.student_comment %></td>
+    <td><%= @report.ta_comment %></td>
+    <td><%= link_to 'プレビュー', preview_path(@report), target: '_blank' %></td>
+  <tr>
+  </tbody>
+</table>
+
+<h4>コメントする</h4>
+<div class="container">
+  <%= form_for @report, url: url_for(:controller => 'manage/reports', :action => :update, :id => @report.id) do |f| %>
+      <div class="field">
+        <%= f.label :ta_comment, :value => 'コメント' %><br>
+        <%= f.text_field :ta_comment, :class => 'form-control'%>
+      </div><br>
+      <div class="actions">
+        <%= f.submit :class => 'btn btn-primary', :value => '以上の内容でコメントする'%>
+      </div>
+  <% end %>
+</div>

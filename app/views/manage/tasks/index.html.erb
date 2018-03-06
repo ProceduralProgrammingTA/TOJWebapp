@@ -1,0 +1,45 @@
+<% breadcrumb :manage_tasks %>
+<h1>問題一覧</h1>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>タイトル</th>
+    <th>締め切り</th>
+    <th>最終リジャッジ</th>
+    <th>公開状態</th>
+    <th>リジャッジ</th>
+    <th>テストケース</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.deadline.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <td><%= task.last_rejudge.nil? ? 'No rejudge' : task.last_rejudge.strftime('%Y-%m-%d %H:%M:%S') %></td>
+        <td><%= (task.is_public ? '<a href="#" class="change-public" data-id="' + task.id.to_s + '">公開</a>' : '<a href="#" class="change-public" data-id="' + task.id.to_s + '">非公開</a>').html_safe %></td>
+        <td><%= ('<a href="#" class="rejudge-button" data-id="' + task.id.to_s + '">リジャッジ</a>').html_safe %></td>
+        <td><%= link_to 'テストケース', manage_task_test_cases_path(task) %></td>
+        <td><%= link_to '詳細', manage_task_path(task) %></td>
+        <td><%= link_to '編集', edit_manage_task_path(task) %></td>
+        <td><%= link_to '削除', manage_task_path(task), method: :delete, data: {confirm: 'Are you sure?'} %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<!-- Model window for rejudging -->
+<div class="modal fade" id="rejudge-modal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="doument">
+    <div class="modal-content">
+      <div class="modal-body">
+        本当に<span id="rejudge-modal-task-name">hoge</span>のリジャッジを実行しますか？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" id="rejudge-execute-button">リジャッジを実行する</button>
+      </div>
+    </div>
+  </div>
+</div>

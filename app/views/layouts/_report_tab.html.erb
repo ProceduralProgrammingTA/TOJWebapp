@@ -1,0 +1,67 @@
+<div class="form-group">
+  <%= form_for(@report) do |f| %>
+      <div class="form-group">
+        <%= f.label :task_title, :value => '課題名'%><br>
+        <!-- <%= radio_button_tag('report[task_title]', '1q-final', :title => '1q-final', :checked => true) %>&nbsp;1q-final &nbsp;&nbsp; -->
+        <%= radio_button_tag('report[task_title]', '2q-final', :title => '2q-final', :checked => true) %> 2q-final
+      </div>
+
+      <div class="form-group">
+        <%= f.label :student_comment, :value => 'コメント'%><br>
+        <%= f.text_field :student_comment, :class => 'form-control' %><br>
+      </div>
+
+      <%= f.label :file, :class => 'control_label', :value => 'ファイル' %>
+      <div class="form-group">
+        <div class="input-group">
+          <%= f.file_field :file, :style => 'display: none;' %>
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" onclick="$('#report_file').click();"><img src="/toj/assets/images/fileopen.png" style="height: 24px;"></button>
+          </span>
+          <div class="input-group">
+            <input id="dummy_file" type="text" class="form-control" placeholder="select file..." disabled>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <%= f.submit(:class => 'btn btn-primary', :value => '提出する') %>
+      </div>
+  <% end %>
+</div>
+
+<h3>レポート提出状況</h3>
+<% reports = current_student.reports.all.group('task_title') %>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>課題名</th>
+    <th>提出日</th>
+    <th>プレビュー</th>
+    <th>フィードバック</th>
+    <th>コメント</th>
+    <th colspan="2"></th>
+  <tr>
+  </thead>
+  <% unless reports.nil? %>
+      <tbody>
+      <% reports.each do |r| %>
+          <tr>
+            <td><%= r.task_title %></td>
+            <td><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <td><%= link_to 'プレビュー', preview_path(r), target: '_blank' %></td>
+            <td><%= r.ta_comment %></td>
+            <td><%= r.student_comment %></td>
+            <td><%= link_to 'コメントする', edit_report_path(r) %></td>
+          </tr>
+      <% end %>
+      </tbody>
+  <% end %>
+</table>
+
+<script type="text/javascript">
+  $(function(){
+    $('#report_file').change(function() {
+      $('#dummy_file').val($(this).val());
+    });
+  })
+</script>

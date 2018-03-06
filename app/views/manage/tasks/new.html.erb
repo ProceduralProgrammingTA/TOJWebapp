@@ -1,0 +1,28 @@
+<% breadcrumb :new_manage_task %>
+<h1>問題作成</h1>
+<%= form_for(@task, url: manage_tasks_path) do |f| %>
+    <%= f.label :title, :value => 'タイトル'%><br>
+    <%= f.text_field :title, :class => 'form-control' %><br>
+
+    <%= f.label :deadline, :value => '締め切り'%><br>
+    <%= f.datetime_select :deadline, :stat_year => 2017, :end_year => 2020, :minute_step => 5 %><br><br>
+
+    <%= f.label :description, :value => '問題の詳細' %><br>
+    <p>Mark Down 形式に対応しています．入力例は下を参照．</p>
+    <%= f.text_area :description, :class => 'form-control', :rows => '30'%><br>
+    <div class="actions">
+      <%= f.submit :class => 'btn btn-primary', :value => '問題を作成する' %>
+    </div><br>
+
+    <h3>Markdown による問題の作成</h3>
+    <div class="panel panel-info">
+      <div class="panel-heading">入力</div>
+      <div class="panel-body"><pre><%=@sample_md%></pre><br></div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">学生からの見え方</div>
+      <div class="panel-body">
+        <%= markdown(@sample_md).html_safe %>
+      </div>
+    </div>
+<% end %>

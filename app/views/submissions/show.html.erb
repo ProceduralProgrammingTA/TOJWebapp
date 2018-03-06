@@ -1,0 +1,69 @@
+<% breadcrumb :show_student_task_submission %>
+<h1><%= @task_title %></h1><br>
+<p><%= link_to '提出ページへ戻る', @current_task %></p>
+<h4>提出日時：<%= @submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %></h4><br>
+<h4>提出されたコード</h4>
+<%= markdown("```c\n" + @code + "\n```").html_safe %><br>
+
+<h4>実行結果</h4>
+<% if @submission.status.nil? %>
+    <% if @submission.is_accepted %>
+        <div class="alert  alert-info">
+          <strong>AC</strong><br>
+          すべてのテストケースで正しい実行結果が得られました．TAのチェックがまだの場合はチェックを受けてください．
+        </div>
+    <% else %>
+        <div class="alert  alert-danger">
+          <strong>WA</strong><br>
+          正しい実行結果が得られないテストケースがあります．出力を確認してください．
+        </div>
+    <% end %>
+<% else %>
+    <% case @submission.status %>
+    <% when 'Queued' then %>
+        <div class="alert alert-success">
+          <strong><%= @submission.status %></strong><br>
+          実行待機中です．しばらくお待ちください．
+        </div>
+    <% when 'Running' then %>
+        <div class="alert alert-success">
+          <strong><%= @submission.status %></strong><br>
+          実行中です．しばらくお待ちください．
+        </div>
+    <% when 'AC' then %>
+        <div class="alert  alert-info">
+          <strong><%= @submission.status %></strong><br>
+          すべてのテストケースで正しい実行結果が得られました．TAのチェックがまだの場合はチェックを受けてください．
+        </div>
+    <% when 'WA' then %>
+        <div class="alert  alert-danger">
+          <strong><%= @submission.status %></strong><br>
+          正しい実行結果が得られないテストケースがあります．出力を確認してください．
+        </div>
+    <% when 'TLE' then %>
+        <div class="alert  alert-danger">
+          <strong><%= @submission.status %></strong><br>
+          実行が制限時間内に終わりませんでした．
+        </div>
+    <% when 'CE' then %>
+        <div class="alert  alert-danger">
+          <strong><%= @submission.status %></strong><br>
+          コンパイルに失敗しました．エラーの内容を確認してください．
+        </div>
+    <% when 'CW' then %>
+        <div class="alert  alert-danger">
+          <strong><%= @submission.status %></strong><br>
+          コンパイル時に警告が出ています．-Wallオプションを付けてエラーが出ないことを確認して再提出してください．
+        </div>
+    <% when 'RE' then %>
+        <div class="alert alert-danger">
+          <strong><%= @submission.status %></strong><br>
+          実行時に異常終了しました．エラーの内容を確認してください．
+        </div>
+    <% end %>
+<% end %>
+
+<h4>TAコメント</h4>
+<pre><%= @submission.ta_comment %></pre>
+<h4>システムの出力</h4>
+<pre><%= @submission.message %></pre><br>

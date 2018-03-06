@@ -1,0 +1,14 @@
+version: '2'
+services:
+  app:
+    privileged: true  # for docker in docker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: "sh entrypoint.sh 3000 0.0.0.0 /toj"
+    tty: true
+    stdin_open: true
+    ports:
+      - "3000:3000" # ホストからゲストへポートフォワード
+#    volumes:
+#      - .:/workdir # ソースコード変更したらDocker側も即反映されるように

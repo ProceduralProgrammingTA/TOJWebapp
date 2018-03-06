@@ -1,0 +1,39 @@
+<% breadcrumb :edit_manage_student_submission %>
+<h1><%= @task_title %></h1><br>
+<h4>提出されたコード</h4>
+<%= markdown("```c\n" + @code + "\n```").html_safe %><br>
+
+<h4>システムの出力</h4>
+<pre><%= @submission.message %></pre><br>
+
+<h4>提出期限</h4>
+<% if @current_task.deadline < @submission.created_at %>
+    <div class="alert  alert-danger">
+      <strong>遅刻です！</strong><br>
+      提出期限：<%= @current_task.deadline.strftime('%Y-%m-%d %H:%M:%S') %>　提出日時：<%= @submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %>
+    </div>
+<% else %>
+    <div class="alert  alert-info">
+      <strong>期限内です</strong><br>
+      提出期限：<%= @current_task.deadline.strftime('%Y-%m-%d %H:%M:%S') %>　提出日時：<%= @submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %>
+    </div>
+<% end %>
+
+<h4>コメント/ TAチェック</h4>
+<div class="container">
+  <%= form_for @submission, url: url_for(:controller => 'manage/submissions', :action => :update, :id => @submission.id) do |f| %>
+      <div class="field">
+        <%= f.label :ta_comment, :value => 'コメント' %><br>
+        <%= f.text_field :ta_comment, :class => 'form-control'%>
+      </div><br>
+      <div class="field">
+        <%= f.label :ta_check, :value => 'チェック' %><br>
+        <%= f.radio_button :ta_check, 0 %> 未チェック
+        <%= f.radio_button :ta_check, 1 %> 遅刻OK &emsp;
+        <%= f.radio_button :ta_check, 2 %> OK
+      </div><br>
+      <div class="actions">
+        <%= f.submit :class => 'btn btn-primary', :value => '以上の内容でコメントする'%>
+      </div>
+  <% end %>
+</div>

@@ -1,0 +1,54 @@
+<% breadcrumb :show_manage_task %>
+<h1><%= @task.title%></h1>
+追加日：<%= @task.created_at.strftime('%Y-%m-%d %H:%M:%S') %> <br>
+変更日：<%= @task.updated_at.strftime('%Y-%m-%d %H:%M:%S') %> <br>
+<%= link_to '編集する', edit_manage_task_path(@task) %>
+<%= markdown(@task.description).html_safe %>
+<h2>学生提出状況</h2>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>名前</th>
+    <th>提出日</th>
+    <th>実行結果</th>
+    <th>TAチェック</th>
+    <th colspan="1"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @students.each do |student| %>
+  <% student_submission = Submission.where(:student_id => student.id, :task_id => @task.id).order('created_at DESC')[0] %>
+      <% if student_submission %>
+          <% if student_submission.is_accepted %>
+              <tr class="success">
+                <td> <%= student.name %> </td>
+                <td> <%= student_submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %> </td>
+                <td> <%= student_submission.status.nil? ? 'AC' : student_submission.status %> </td>
+          <% else %>
+                <tr>
+                <td> <%= student.name %> </td>
+                <td> <%= student_submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %> </td>
+                <td> <%= student_submission.status.nil? ? 'NG' : student_submission.status %> </td>
+          <% end %>
+            <% case student_submission.ta_check %>
+            <% when 0 then %>
+                <td>未チェック</td>
+            <% when 1 then %>
+                <td>遅刻OK</td>
+            <% when 2 then %>
+                <td>OK</td>
+            <% end %>
+            <td><%= link_to '採点する', edit_manage_student_submission_path(student, student_submission) %></td>
+          </tr>
+      <% else %>
+          <tr class="danger">
+            <td> <%= student.name %> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+          </tr>
+      <% end %>
+  <% end %>
+  </tbody>
+</table>

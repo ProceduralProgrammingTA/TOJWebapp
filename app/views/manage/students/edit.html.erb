@@ -1,0 +1,15 @@
+<% breadcrumb :edit_manage_student %>
+<h1>学生情報の編集</h1>
+<%= form_for(@student, url: manage_student_path) do |f| %>
+    <div class="field">
+      <%= f.label :name ,:value => '名前'%><br>
+      <%= f.text_field :name ,:class => 'form-control' %>
+    </div>
+    <div class="field">
+      <%= f.label :password ,:value => 'パスワード'%><br>
+      <%= f.password_field :password ,:class => 'form-control' %>
+    </div>
+    <div class="actions">
+      <%= f.submit :value => '編集' %>
+    </div>
+<% end %>
