@@ -1,0 +1,6 @@
+require 'admins.schema'
+require 'reports.schema'
+require 'students.schema'
+require 'submissions.schema'
+require 'tasks.schema'
+require 'test_cases.schema'

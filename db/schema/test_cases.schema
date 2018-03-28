@@ -1,0 +1,8 @@
+create_table "test_cases", force: :cascade do |t|
+  t.string   "file_name",  limit: 255
+  t.string   "content",    limit: 255
+  t.string   "memo",       limit: 255
+  t.integer  "task_id",    limit: 4
+  t.datetime "created_at",             null: false
+  t.datetime "updated_at",             null: false
+end

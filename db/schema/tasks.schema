@@ -1,0 +1,9 @@
+create_table "tasks", force: :cascade do |t|
+  t.string   "title",        limit: 255
+  t.string   "description",  limit: 255
+  t.datetime "created_at",                               null: false
+  t.datetime "updated_at",                               null: false
+  t.datetime "deadline"
+  t.boolean  "is_public",                default: false
+  t.datetime "last_rejudge"
+end

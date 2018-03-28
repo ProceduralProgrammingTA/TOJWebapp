@@ -2,6 +2,7 @@ version: '3'
 services:
   mysql:
     container_name: $TOJ_DB_CONTAINER_NAME
+    env_file: .env
     ports:
       - $TOJ_DB_PORT:3306
     build:
@@ -15,6 +16,7 @@ services:
       - $TOJ_DB_FILE_PATH:/var/lib/mysql
   app:
     privileged: true  # for docker in docker
+    env_file: .env
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,11 +24,11 @@ services:
       - mysql
     links:
       - mysql:mysql
-    # command: "sh entrypoint.sh 3000 0.0.0.0 /toj"
-    command: "bundle exec rails s"
+    #command: "bundle exec rails s"
+    command: "sh entrypoint.sh 3000 0.0.0.0 /toj"
     tty: true
     stdin_open: true
     ports:
-      - "3000:3000" # ホストからゲストへポートフォワード
+      - 3000:3000
 #    volumes:
 #      - .:/workdir # ソースコード変更したらDocker側も即反映されるように

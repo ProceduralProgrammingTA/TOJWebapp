@@ -9,7 +9,7 @@ wrapdocker &
 sleep 5
 
 # rails server
-RAILS_RELATIVE_URL_ROOT=$RELATIVE_ROOT bundle exec rails s -p $PORT -b $HOST
+bundle exec rails s -p $PORT -b $HOST
 
 while true
     do sleep 10

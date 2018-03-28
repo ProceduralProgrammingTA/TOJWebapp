@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             nodejs \
             build-essential \
-            mysql-client
+            mysql-client \
             gcc make wget \
     && rm -rf /var/lib/apt/lists/*
 
@@ -36,7 +36,3 @@ VOLUME /var/lib/docker
 
 # rake
 ADD . /workdir
-
-RUN touch db/students.csv
-RUN rake db:migrate RAILS_ENV=development
-RUN rake db:seed
