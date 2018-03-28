@@ -9,7 +9,7 @@ class SubmissionsController < ApplicationController
     current_student.submissions << @submission
     @submission.code = upload_file
 
-    filepath = '/data/' + current_student.name + '/' + @task.title
+    filepath = "/data/submissions/#{@submission.id}"
     FileUtils.mkdir_p(filepath) unless FileTest.exist?(filepath)
 
     filename = filepath + '/submission.c'
