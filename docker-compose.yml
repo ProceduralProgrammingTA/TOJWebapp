@@ -30,5 +30,6 @@ services:
     stdin_open: true
     ports:
       - 3000:3000
-#    volumes:
-#      - .:/workdir # ソースコード変更したらDocker側も即反映されるように
+    volumes:
+      - $TOJ_FILE_DIR:/data
+      # - $:/workdir # ソースコード変更したらDocker側も即反映されるように

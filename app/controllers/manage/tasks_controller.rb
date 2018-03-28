@@ -2,103 +2,29 @@ class Manage::TasksController < ApplicationController
   before_action :authenticate_admin!
   def new
     @task = Task.new
-    @sample_md ='
-# 問題
-## Hello World!
-```sh
-Hello World!
-```
-と出力するC言語のプログラムを書きなさい．
-
-* 標準入力なしで出力する
-* **最後に改行を入れることを忘れない**
-* **必ず手元で動作確認をしてから提出すること**
-
-プログラム例
-
-```c
-#include <stdio.h>
-int main() {
-  printf("Hello World!\n");
-  return 0;
-}
-```
-'
+    sample_file_path = Rails.root.join('file_templates', 'task_sample.md')
+    @sample_md = ''
+    File.open(sample_file_path, 'r') do |f|
+      @sample_md = f.read()
+    end
   end
 
   def create
     task_params = params.require(:task).permit(:title, :deadline, :description)
-    @task = Task.new(task_params)
+    @task = Task.create(task_params)
 
     filepath = "/data/tasks/#{@task.id}"
     FileUtils.mkdir_p(filepath) unless FileTest.exist?(filepath)
     test_script = filepath + '/test.sh'
-    script_sample = '#!/bin/bash
-studentname=$1
-taskname=$2
-output_limit=1000
+    script_template = Rails.root.join('file_templates', 'test.sh')
 
-shrink() {
-  outfile=$1
-  message=$2
-  outsize="$(wc -c $outfile | awk \'{print $1}\')"
-  head -c $output_limit $outfile
-  echo
-  [ $outsize -gt $output_limit ] && echo $message [$outsize bytes]
-}
-
-judge() {
-  case=$1
-  shift
-  echo [case${case}]
-  timeout 1 /$studentname/a.out "$@" < /$taskname/in$case > /$studentname/stdout$case 2> /$studentname/stderr$case
-  exit_status=$?
-  if [ $exit_status -eq 124 ] ; then
-    echo TLE
-  elif [ $exit_status -ne 0 ] ; then
-    echo Runtime Error
-    cat /$studentname/stderr$case
-  elif diff -wB /$studentname/stdout$case /$taskname/out$case > /dev/null 2>&1 ; then
-    echo OK
-  else
-    echo NG
-    echo output:
-    shrink /$studentname/stdout$case "++ Output is shrinked because it is too large. ++"
-    echo expected:
-    shrink /$taskname/out$case "++ Output is shrinked because it is too large. ++"
-  fi
-}
-
-[ -f /$studentname/a.out ] && rm /$studentname/a.out
-[ -f /$studentname/stdout1 ] && rm /$studentname/stdout*
-
-timeout 10 gcc -lm -Wall /$studentname/submission.c -o /$studentname/a.out 2> /$studentname/compile_stderr
-
-compile_status=$?
-if [ $compile_status -ne 0 ] ; then
-  echo Compile Error
-  shrink /$studentname/compile_stderr "++ Error message from compiler is shrinked because it is too large. ++"
-  [ $compile_status -eq 124 ] && echo ++ Compile time is too long. ++
-  exit
-elif [ "$(grep warning /$studentname/compile_stderr)" != "" ] ; then
-  echo Compile Warning
-  shrink /$studentname/compile_stderr "++ Error message from compiler is shrinked because it is too large. ++"
-  exit
-fi
-
-for i in 1 2 3 4 ; do
-  judge $i
-done'
-
-    File.open(test_script, 'w') do |f|
-      f.print(script_sample)
-    end
-    test_case = @task.test_cases.build(:file_name => 'test.sh', :content => script_sample)
+    FileUtils.cp(script_template, test_script)
+    test_case = @task.test_cases.build(file_name: 'test.sh')
     test_case.save
     for i in (1..4) do
-      input_file = @task.test_cases.build(:file_name => "in#{i}", :content => "input#{i}")
+      input_file = @task.test_cases.build(file_name: "in#{i}")
       input_file.save
-      output_file = @task.test_cases.build(:file_name => "out#{i}", :content => "output#{i}")
+      output_file = @task.test_cases.build(file_name: "out#{i}")
       output_file.save
       File.open(filepath + "/in#{i}", 'w') do |f|
         f.print("input#{i}")

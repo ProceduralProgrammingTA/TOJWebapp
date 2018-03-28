@@ -1,0 +1,13 @@
+- breadcrumb :new_manage_task_test_case
+h1 ファイル編集
+= form_tag(manage_task_test_cases_path(@task, @test_case), method: :post) do
+  = label_tag :file_name, 'ファイル名'
+  = text_field :test_case, :file_name, { class: 'form-control' }
+
+  = label_tag :memo, 'メモ'
+  = text_field :test_case, :memo, { class: 'form-control' }
+
+  = label_tag :content, '内容'
+  = text_area :test_case, :content, { class: 'form-control', rows: '30' }
+
+  = submit_tag 'submit', { value: 'ファイルを作成する', class: 'btn btn-primary' }
