@@ -2,7 +2,6 @@
 
 PORT=$1
 HOST=$2
-RELATIVE_ROOT=$3
 
 # docker in docker service
 wrapdocker &

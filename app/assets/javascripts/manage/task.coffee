@@ -7,7 +7,7 @@ $ ->
     e.preventDefault()
     el = $(@)
     id = el.data("id")
-    $.post "/toj/manage/tasks/#{id}/toggle_public", {}, (data) ->
+    $.post "/manage/tasks/#{id}/toggle_public", {}, (data) ->
       el.text(if data.is_public then "公開" else "非公開")
 
   $(".rejudge-button").on "click", (e) ->
@@ -21,4 +21,4 @@ $ ->
   $("#rejudge-execute-button").on "click", (e) ->
     e.preventDefault()
     id = $(@).data "id"
-    $.post "/toj/manage/tasks/#{id}/rejudge"
+    $.post "/manage/tasks/#{id}/rejudge"
