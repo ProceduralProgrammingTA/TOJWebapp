@@ -28,3 +28,6 @@
 .byebug_history
 
 /queuemaster.lock
+
+# ignore environment file
+.env

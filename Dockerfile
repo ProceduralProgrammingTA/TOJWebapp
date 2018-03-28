@@ -1,12 +1,11 @@
-FROM ruby:2.3.3
+FROM ruby:2.4
 
 # ruby on rails
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             nodejs \
-            sqlite3 \
-            libsqlite3-dev \
             build-essential \
+            mysql-client
             gcc make wget \
     && rm -rf /var/lib/apt/lists/*
 
