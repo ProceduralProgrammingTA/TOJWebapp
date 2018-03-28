@@ -27,3 +27,7 @@ test:
 production:
   <<: *default
   database: tojdb
+  username: root
+  password: <%= ENV['TOJ_DB_ROOT_PASSWORD'] %>
+  host: mysql
+  port: 3306

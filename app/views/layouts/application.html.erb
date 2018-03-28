@@ -3,7 +3,8 @@
 <head>
   <title>手続き型プログラミング演習</title>
   <link rel="icon" href="/assets/images/titech.jpg">
-  <link rel="stylesheet" media="all" href="/assets/stylesheets/bootstrap.css">
+  <%= stylesheet_link_tag 'bootstrap'%>
+  <%= javascript_include_tag 'bootstrap' %>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -24,7 +25,6 @@
   <%= yield %>
 </div>
 </body>
-<script src="/assets/javascripts/bootstrap.js"></script>
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$']] } });
 </script>

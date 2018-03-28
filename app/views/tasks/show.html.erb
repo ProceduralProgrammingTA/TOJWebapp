@@ -1,6 +1,6 @@
 <% breadcrumb :show_student_task %>
 <h1><%= @task.title %></h1>
-<% if @task.deadline < Date.today %>
+<% if @task.deadline < DateTime.now %>
     <div class="alert alert-danger">
       <strong>提出期限：</strong><%= @task.deadline.strftime('%Y-%m-%d %H:%M:%S') %><br>
       <strong>締切が過ぎています！</strong>
