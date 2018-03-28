@@ -37,7 +37,7 @@ class ReportsController < ApplicationController
 
   private
   def upload_pdf(file_object, task_title, file_name)
-    file_path = "/Users/Shared/TOJWebapp/data/#{current_student.name}/reports/#{task_title}"
+    file_path = "/data/#{current_student.name}/reports/#{task_title}"
     FileUtils.mkdir_p(file_path) unless FileTest.exist?(file_path)
     perms = ['.pdf']
     if !perms.include?(File.extname(file_object.path).downcase)
@@ -52,6 +52,6 @@ class ReportsController < ApplicationController
   end
 
   def delete_pdf(file_name, task_title)
-    File.unlink "/Users/Shared/TOJWebapp/data/#{current_student.name}/reports/#{task_title}/#{file_name.toutf8}"
+    File.unlink "/data/#{current_student.name}/reports/#{task_title}/#{file_name.toutf8}"
   end
 end

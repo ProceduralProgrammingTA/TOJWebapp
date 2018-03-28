@@ -12,7 +12,7 @@ class Manage::TestCasesController < ApplicationController
     @task = Task.find(params[:task_id])
     @test_case = @task.test_cases.build(test_case_params)
     if @test_case.save
-      file_path = '/Users/Shared/TOJWebapp/data/code_test/' + @task.title + '/' + @test_case.file_name
+      file_path = '/data/code_test/' + @task.title + '/' + @test_case.file_name
       File.open(file_path, 'wb') do |f|
         f.print(@test_case.content)
       end
@@ -41,7 +41,7 @@ class Manage::TestCasesController < ApplicationController
     test_case_params[:content] = test_case_params[:content].gsub("\r\n", "\n")
     @task = Task.find(params[:task_id])
     if @test_case.update(test_case_params)
-      file_path = '/Users/Shared/TOJWebapp/data/code_test/' + @task.title + '/' + @test_case.file_name
+      file_path = '/data/code_test/' + @task.title + '/' + @test_case.file_name
       File.open(file_path, 'wb') do |f|
         f.print(@test_case.content)
       end
@@ -54,7 +54,7 @@ class Manage::TestCasesController < ApplicationController
   def destroy
     @test_case = TestCase.find(params[:id])
     @task = Task.find(params[:task_id])
-    file_path = '/Users/Shared/TOJWebapp/data/code_test/' + @task.title + '/' + @test_case.file_name
+    file_path = '/data/code_test/' + @task.title + '/' + @test_case.file_name
     File.unlink(file_path)
     @test_case.destroy
     redirect_to manage_task_test_cases_path(@task), notice: 'ファイルの削除が完了しました'
@@ -62,7 +62,7 @@ class Manage::TestCasesController < ApplicationController
 
   def load_file
     @task = Task.find(params[:task_id])
-    file_path = '/Users/Shared/TOJWebapp/data/code_test/' + @task.title + '/*'
+    file_path = '/data/code_test/' + @task.title + '/*'
     Dir.glob(file_path).each do |file_name|
       name = File.basename(file_name)
       content = File.read(file_name)

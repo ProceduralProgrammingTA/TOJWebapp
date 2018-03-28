@@ -30,7 +30,7 @@ int main() {
     task_params = params.require(:task).permit(:title, :deadline, :description)
     @task = Task.new(task_params)
 
-    filepath = '/Users/Shared/TOJWebapp/data/code_test/' + @task.title
+    filepath = '/data/code_test/' + @task.title
     FileUtils.mkdir_p(filepath) unless FileTest.exist?(filepath)
     test_script = filepath + '/test.sh'
     script_sample = '#!/bin/bash
