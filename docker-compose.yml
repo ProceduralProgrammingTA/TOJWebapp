@@ -29,7 +29,7 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - 3000:3000
+      - 80:3000
     volumes:
       - $TOJ_FILE_DIR:/data
       # - $:/workdir # ソースコード変更したらDocker側も即反映されるように

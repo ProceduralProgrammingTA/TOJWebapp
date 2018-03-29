@@ -1,4 +1,4 @@
-create_table "test_cases", force: :cascade do |t|
+create_table "test_cases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
   t.string   "file_name",  limit: 255
   t.string   "memo",       limit: 255
   t.integer  "task_id",    limit: 4

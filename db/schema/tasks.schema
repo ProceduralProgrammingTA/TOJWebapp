@@ -1,6 +1,6 @@
-create_table "tasks", force: :cascade do |t|
+create_table "tasks", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
   t.string   "title",        limit: 255
-  t.string   "description",  limit: 255
+  t.text     "description"
   t.datetime "created_at",                               null: false
   t.datetime "updated_at",                               null: false
   t.datetime "deadline"
