@@ -36,3 +36,4 @@ VOLUME /var/lib/docker
 
 # rake
 ADD . /workdir
+RUN bundle exec rake assets:precompile

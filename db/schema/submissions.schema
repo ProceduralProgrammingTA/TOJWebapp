@@ -1,6 +1,6 @@
 create_table "submissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC" do |t|
   t.text     "code"
-  t.string   "message",      limit: 255
+  t.text     "message"
   t.boolean  "is_accepted"
   t.integer  "student_id",   limit: 4
   t.integer  "task_id",      limit: 4
