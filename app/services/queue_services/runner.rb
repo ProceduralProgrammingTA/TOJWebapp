@@ -39,13 +39,11 @@ module QueueServices
     def run
       student_name = @submission.student.name
       task_title = @submission.task.title
-      filepath = "/Users/Shared/TOJWebapp/data/#{student_name}/#{task_title}"
-      filename = filepath + '/submission.c'
+      task_id = @submission.task_id
 
       require 'open3'
-      current_dir = '/Users/Shared/TOJWebapp'
 
-      cmd = "docker run -v #{current_dir}/data/#{student_name}/#{task_title}:/#{student_name} -v #{current_dir}/data/code_test/#{task_title}:/#{task_title} 'gcc:latest' bash -c \"chmod +x /#{task_title}/test.sh;/#{task_title}/test.sh #{student_name} #{task_title}\""
+      cmd = "docker run -v /data/submissions/#{@submission.id}:/#{student_name} -v /data/tasks/#{task_id}:/#{task_title} 'gcc:latest' bash -c \"chmod +x /#{task_title}/test.sh;/#{task_title}/test.sh #{student_name} #{task_title}\""
       o, e, s = Open3.capture3(cmd)
       @submission.message = o.to_s + e.to_s
       @submission.message = @submission.message.gsub(/\r\n/, "\n") rescue "Invalid Output"

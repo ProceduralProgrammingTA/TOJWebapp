@@ -9,15 +9,10 @@ class SubmissionsController < ApplicationController
     current_student.submissions << @submission
     @submission.code = upload_file
 
-    # filepath = 'data/' + current_student.name + '/' + @task.title
-    # local_filepath = 'data/' + current_student.name + '/' + @task.title
-    filepath = '/Users/Shared/TOJWebapp/data/' + current_student.name + '/' + @task.title
-    # filepath = '/opt/local/apache2/htdocs-in/Users/Shared/data/' + current_student.name + '/' + @task.title
+    filepath = "/data/submissions/#{@submission.id}"
     FileUtils.mkdir_p(filepath) unless FileTest.exist?(filepath)
-    # FileUtils.mkdir_p(local_filepath) unless FileTest.exist?(local_filepath)
 
     filename = filepath + '/submission.c'
-    # local_filename = local_filepath + '/submission.c'
     File.open(filename, 'w') do |f|
       f.puts(@submission.code)
     end
@@ -26,7 +21,6 @@ class SubmissionsController < ApplicationController
     @submission.is_accepted = @submission.status == 'AC'
 
     if @submission.save
-      # redirect_to root_path, notice: 'Your submission was Completed!'
       redirect_to task_submission_path(@task, @submission), notice: 'Your submission was Completed!'
     else
       render :show

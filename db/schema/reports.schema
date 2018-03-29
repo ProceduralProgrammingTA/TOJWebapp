@@ -1,0 +1,9 @@
+create_table "reports", force: :cascade do |t|
+  t.string   "task_title",      limit: 255
+  t.string   "file_name",       limit: 255
+  t.string   "student_comment", limit: 255
+  t.string   "ta_comment",      limit: 255
+  t.integer  "student_id",      limit: 4
+  t.datetime "created_at",                  null: false
+  t.datetime "updated_at",                  null: false
+end

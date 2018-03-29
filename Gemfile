@@ -5,6 +5,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.8'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+# Use mysql as the database for Active Record
+gem 'mysql2', '< 0.5'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -29,6 +31,11 @@ gem 'devise'
 gem 'redcarpet', '~> 2.3.0'
 gem 'coderay'
 gem 'gretel'
+
+gem 'slim-rails'
+
+# Use ridgepole as the database schema manager
+gem 'ridgepole'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

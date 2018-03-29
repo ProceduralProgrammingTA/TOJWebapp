@@ -1,6 +1,6 @@
 <% breadcrumb :show_student_task %>
 <h1><%= @task.title %></h1>
-<% if @task.deadline < Date.today %>
+<% if @task.deadline < DateTime.now %>
     <div class="alert alert-danger">
       <strong>提出期限：</strong><%= @task.deadline.strftime('%Y-%m-%d %H:%M:%S') %><br>
       <strong>締切が過ぎています！</strong>
@@ -21,7 +21,7 @@
       <div class="input-group">
         <%= f.file_field :code, :style => 'display: none;' %>
         <span class="input-group-btn">
-          <button class="btn btn-default" type="button" onclick="$('#submission_code').click();"><img src="/toj/assets/images/fileopen.png" style="height: 24px;"></button>
+          <button class="btn btn-default" type="button" onclick="$('#submission_code').click();"><img src="/assets/images/fileopen.png" style="height: 24px;"></button>
         </span>
         <div class="input-group">
           <input id="dummy_file" type="text" class="form-control" placeholder="select file..." disabled>

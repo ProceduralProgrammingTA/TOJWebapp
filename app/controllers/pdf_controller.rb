@@ -11,7 +11,7 @@ class PdfController < ApplicationController
     end
     task_title = report.task_title
     file_name = "#{student_name}.pdf"
-    file_path = "/Users/Shared/TOJWebapp/data/#{student_name}/reports/#{task_title}/"
+    file_path = "/data/#{student_name}/reports/#{task_title}/"
     send_file(file_path+file_name, filename: file_name, type: 'application/pdf', disposition: 'inline', length: File::size(file_path+file_name))
   end
 end

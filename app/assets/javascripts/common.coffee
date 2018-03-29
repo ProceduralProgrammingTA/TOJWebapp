@@ -3,7 +3,7 @@ $.turbo.use 'turbolinks:render', 'turbolinks:request-start'
 
 ###
 statusReload = (el, taskId, submissionId) ->
-  $.get "/toj/tasks/#{taskId}/submissions/#{submissionId}/status.json", {}, (data) ->
+  $.get "/tasks/#{taskId}/submissions/#{submissionId}/status.json", {}, (data) ->
     el.text("#{data.status}")
     if !data.is_completed
       setTimeout ->
