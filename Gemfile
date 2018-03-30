@@ -36,7 +36,7 @@ gem 'slim-rails'
 
 # Use ridgepole as the database schema manager
 gem 'ridgepole'
-
+gem 'activerecord-mysql-awesome'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
