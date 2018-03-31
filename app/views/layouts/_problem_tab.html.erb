@@ -17,7 +17,7 @@
         <td><%= task.title %></td>
         <td><%= task.deadline.strftime('%Y-%m-%d %H:%M:%S') %></td>
         <% unless task.submission_id.nil? %>
-            <td><%= task.submissions.last.created_at.strftime('%Y-%m-%d %H:%M:%S') %>
+            <td><%= task.submission_created_at.strftime('%Y-%m-%d %H:%M:%S') %>
             <td class="<%= task.submission_is_completed ? '' : 'submission-status'%>" data-submissionid="<%= task.submission_id %>"
               data-taskid="<%= task.id %>"><%=
               if task.submission_status.nil?
