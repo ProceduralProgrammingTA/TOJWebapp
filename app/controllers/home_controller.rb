@@ -3,8 +3,14 @@ class HomeController < ApplicationController
   def index
     submissions = Submission.arel_table
     tasks = Task.arel_table
+
+    sql = "select max(created_at) from submissions group by student_id, task_id having student_id = #{current_student.id}"
+    submission_time = Submission.find_by_sql(sql).map do |s|
+      s.attributes["max(created_at)"]
+    end
+
     current_student_submissions = submissions
-      .where(submissions[:student_id].eq(current_student.id))
+      .where(submissions[:created_at].in(submission_time))
       .project(Arel.star)
       .as('submissions')
     join_conds = tasks.join(current_student_submissions, Arel::Nodes::OuterJoin)
@@ -18,23 +24,14 @@ class HomeController < ApplicationController
                  .select('submissions.is_completed AS submission_is_completed')
                  .select('submissions.status AS submission_status')
                  .select('submissions.is_accepted AS submission_is_accepted')
-                 .select('MAX(submissions.created_at) AS submission_created_at')
+                 .select('submissions.created_at AS submission_created_at')
+      # 2018/Mar/31 この部分でMAXを使わなくてもいいように修正
       # この部分の挙動はSQLiteのMAX()の挙動に依存しているのでMySQLなどを使用する場合は注意
       # https://www.sqlite.org/lang_select.html#resultset
       # のSpecial processing occurs when ... min() or max() ... のあたり
       # MySQLでやるとMAX()のカラム以外は適当なrowが選択されるらしい
-    # sql = 'select id from submissions as m where created_at = (select max(created_at) from submissions as s where m.task_id = s.task_id)'
-    # submission_ids = Submission.find_by_sql(sql).map(&:id)
-
-    # @tasks = Task.joins('LEFT OUTER JOIN submissions ON tasks.id = submissions.task_id')
-    #              .where(["is_public = ? and submissions.id IN (?)", true, submission_ids])
-    #              .select('tasks.*')
-    #              .select('submissions.id AS submission_id')
-    #              .select('submissions.ta_check AS submission_ta_check')
-    #              .select('submissions.is_completed AS submission_is_completed')
-    #              .select('submissions.status AS submission_status')
-    #              .select('submissions.is_accepted AS submission_is_accepted')
-    #              .order(:id)
+    # なぜかここで取得するcreated_atはTimezoneがUTCになるので、Tokyoに合わせる
+    @tasks.map { |task| task.submission_created_at = task.submission_created_at.in_time_zone('Tokyo') }
     @report = Report.new
   end
 end

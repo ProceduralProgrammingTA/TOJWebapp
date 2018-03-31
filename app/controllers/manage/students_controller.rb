@@ -6,7 +6,11 @@ class Manage::StudentsController < ApplicationController
 
   def show
     @student = Student.find(params[:id])
-    @submissions = @student.submissions.group("task_id")
+    sql = "select max(created_at) from submissions group by student_id, task_id having student_id = #{@student.id}"
+    submission_time = Submission.find_by_sql(sql).map do |s|
+      s.attributes["max(created_at)"]
+    end
+    @submissions = @student.submissions.where(created_at: submission_time)
     @reports = @student.reports.group('task_title')
   end
 
