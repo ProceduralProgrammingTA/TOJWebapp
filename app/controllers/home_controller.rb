@@ -30,8 +30,9 @@ class HomeController < ApplicationController
       # https://www.sqlite.org/lang_select.html#resultset
       # のSpecial processing occurs when ... min() or max() ... のあたり
       # MySQLでやるとMAX()のカラム以外は適当なrowが選択されるらしい
+
     # なぜかここで取得するcreated_atはTimezoneがUTCになるので、Tokyoに合わせる
-    @tasks.map { |task| task.submission_created_at = task.submission_created_at.in_time_zone('Tokyo') }
+    @tasks.map { |task| task.submission_created_at = task.submission_created_at&.in_time_zone('Tokyo') }
     @report = Report.new
   end
 end
