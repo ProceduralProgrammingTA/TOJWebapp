@@ -37,7 +37,7 @@ judge() {
 [ -f /$studentname/a.out ] && rm /$studentname/a.out
 [ -f /$studentname/stdout1 ] && rm /$studentname/stdout*
 
-timeout 10 gcc -O2 -lm -std=c99 -Wall -Wpedantic -Wvla -Wdeclaration-after-statement /$studentname/submission.c -o /$studentname/a.out 2> /$studentname/compile_stderr
+timeout 10 gcc -O2 -lm -std=gnu89 -Wall -Wvla -Wdeclaration-after-statement /$studentname/submission.c -o /$studentname/a.out 2> /$studentname/compile_stderr
 
 compile_status=$?
 if [ $compile_status -ne 0 ] ; then
