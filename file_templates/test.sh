@@ -6,7 +6,7 @@ output_limit=1000
 shrink() {
   outfile=$1
   message=$2
-  outsize="$(wc -c $outfile | awk \'{print $1}\')"
+  outsize="$(wc -c $outfile | awk '{print $1}')"
   head -c $output_limit $outfile
   echo
   [ $outsize -gt $output_limit ] && echo $message [$outsize bytes]
