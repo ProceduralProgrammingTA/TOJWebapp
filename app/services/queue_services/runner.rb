@@ -37,13 +37,13 @@ module QueueServices
     end
 
     def run
-      student_name = @submission.student.name
-      task_title = @submission.task.title
+      task_title = SecureRandom.uuid
       task_id = @submission.task_id
+      student_name = SecureRandom.uuid
 
       require 'open3'
 
-      cmd = "docker run -v /data/submissions/#{@submission.id}:/#{student_name} -v /data/tasks/#{task_id}:/#{task_title}:ro 'gcc:latest' bash -c \"chmod +x /#{task_title}/test.sh;/#{task_title}/test.sh #{student_name} #{task_title}\""
+      cmd = "docker run -v /data/submissions/#{@submission.id}:/#{student_name} -v /data/tasks/#{task_id}:/#{task_title}:ro 'gcc:latest' bash -c \"bash /#{task_title}/test.sh #{student_name} #{task_title}\""
       o, e, s = Open3.capture3(cmd)
       @submission.message = o.to_s + e.to_s
       @submission.message = @submission.message.gsub(/\r\n/, "\n") rescue "Invalid Output"
