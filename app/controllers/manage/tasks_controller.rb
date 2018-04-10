@@ -68,8 +68,12 @@ class Manage::TasksController < ApplicationController
 
   def rejudge
     task = Task.find(params[:task_id])
-    submissions = Submission.select(:id, 'MAX(created_at)', :status).group(:student_id)
-      .where(task_id: task.id)
+    sql = "select max(created_at) from submissions group by student_id, task_id having task_id = #{task.id}"
+    submission_time = Submission.find_by_sql(sql).map do |s|
+      s.attributes["max(created_at)"]
+    end
+
+    submissions = Submission.where(created_at: submission_time)
     submissions.each { |sub| sub.status = 'Queued' }
     Submission.transaction { submissions.each(&:save) }
     task.last_rejudge = DateTime.now
