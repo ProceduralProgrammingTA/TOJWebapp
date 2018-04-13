@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   mysql:
     container_name: $TOJ_DB_CONTAINER_NAME
@@ -25,7 +25,7 @@ services:
     links:
       - mysql:mysql
     #command: "bundle exec rails s"
-    command: "sh entrypoint.sh 3000 0.0.0.0"
+    command: "bash entrypoint.sh 3000 0.0.0.0"
     tty: true
     stdin_open: true
     ports:
