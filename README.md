@@ -24,7 +24,7 @@ Tiny Programming Test Platform for Checking User's Programs
 
 ## Usage
 
-### 1. Configure Environments Variable
+### 1. Configure Environment Variables
 
 Edit `.env.sample` and save as `.env` at the root of this repository.
 
@@ -47,7 +47,7 @@ RAILS_SERVE_STATIC_FILES=0
 docker-compose up -d
 ```
 
-TOJWebApp will be launched at `http://localhost:80` on by default. (PORT specified in `docker-compose.yml`)
+TOJWebApp will be launched at `http://localhost:80` on by default. (Port can be changed in `docker-compose.yml`)
 
 ### 3. Create Users
 ```sh
@@ -66,4 +66,6 @@ docker exec -it $app_container bundle exec rake generator:students
 ```sh
 # remove all running containers (with keeping volumes)
 docker-compose down
+
+# NOTE: if completely deletion required, please remove the files in 'TOJ_DB_FILE_PATH' and 'TOJ_FILE_DIR' in your '.env' file.
 ```
