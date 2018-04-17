@@ -19,7 +19,7 @@ class Manage::TestCasesController < ApplicationController
       end
       redirect_to manage_task_test_cases_path(@task), notice: 'ファイルが追加されました!'
     else
-      render :show
+      redirect_to manage_task_test_cases_path(@task), alert: 'ファイルの作成に失敗しました'
     end
   end
 

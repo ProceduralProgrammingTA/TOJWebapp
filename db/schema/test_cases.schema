@@ -5,3 +5,5 @@ create_table "test_cases", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHAR
   t.datetime "created_at",             null: false
   t.datetime "updated_at",             null: false
 end
+
+add_index "test_cases", ["file_name", "task_id"], unique: true
