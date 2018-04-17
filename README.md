@@ -24,7 +24,7 @@ Tiny Programming Test Platform for Checking User's Programs
 
 ## Usage
 
-### 1. Configure Environments Variable
+### 1. Configure Environment Variables
 
 Edit `.env.sample` and save as `.env` at the root of this repository.
 
@@ -43,20 +43,11 @@ RAILS_SERVE_STATIC_FILES=0
 
 ### 2. Deploy Containers
 ```sh
-# 1. run docker containers (if updating container required, add `--build` option)
+# run docker containers (if updating container required, add `--build` option)
 docker-compose up -d
-
-# 2. run post-deploy scripts
-# NOTE: $app_container is the web-application container name of TOJWebApp (e.g. "tojwebapp_app_1")
-
-## Check the differences of tables
-docker exec $app_container bundle exec rake ridgepole:dry-run
-
-## Create the tables in DB
-docker exec $app_container bundle exec rake ridgepole:apply
 ```
 
-TOJWebApp will be launched at `http://localhost:80` on by default. (PORT specified in `docker-compose.yml`)
+TOJWebApp will be launched at `http://localhost:80` on by default. (Port can be changed in `docker-compose.yml`)
 
 ### 3. Create Users
 ```sh
@@ -75,4 +66,6 @@ docker exec -it $app_container bundle exec rake generator:students
 ```sh
 # remove all running containers (with keeping volumes)
 docker-compose down
+
+# NOTE: if completely deletion required, please remove the files in 'TOJ_DB_FILE_PATH' and 'TOJ_FILE_DIR' in your '.env' file.
 ```
