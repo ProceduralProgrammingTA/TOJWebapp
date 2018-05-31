@@ -1,3 +1,4 @@
+# coding: utf-8
 require 'kconv'
 class ReportsController < ApplicationController
   before_action :authenticate_student!
@@ -37,7 +38,7 @@ class ReportsController < ApplicationController
 
   private
   def upload_pdf(file_object, task_title, file_name)
-    file_path = "/data/#{current_student.name}/reports/#{task_title}"
+    file_path = "/data/reports/#{current_student.name}/#{task_title}"
     FileUtils.mkdir_p(file_path) unless FileTest.exist?(file_path)
     perms = ['.pdf']
     if !perms.include?(File.extname(file_object.path).downcase)
