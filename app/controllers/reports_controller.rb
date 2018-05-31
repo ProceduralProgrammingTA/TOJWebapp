@@ -9,11 +9,12 @@ class ReportsController < ApplicationController
     file_name = "#{current_student.name}.pdf"
     @report.file_name = file.original_filename
     result = upload_pdf(file, @report.task_title, file_name)
-    last_report = current_student.reports.where(:task_title => reports_param[:task_title]).order('created_at desc').first
+    last_report = current_student.reports.where(:task_title => reports_param[:task_title]).order('updated_at desc').first
     unless last_report.nil? || last_report.ta_comment.blank?
       @report.ta_comment = last_report.ta_comment
     end
 
+    @report.updated_at = Time.now
     if result == 'success' && @report.save
       redirect_to root_path, notice: 'レポートの提出に成功しました'
     else
@@ -53,6 +54,6 @@ class ReportsController < ApplicationController
   end
 
   def delete_pdf(file_name, task_title)
-    File.unlink "/data/#{current_student.name}/reports/#{task_title}/#{file_name.toutf8}"
+    File.unlink "/data/reports/#{current_student.name}/#{task_title}/#{file_name.toutf8}"
   end
 end

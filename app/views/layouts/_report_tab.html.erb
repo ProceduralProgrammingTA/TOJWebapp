@@ -35,7 +35,7 @@
   <thead>
   <tr>
     <th>課題名</th>
-    <th>提出日</th>
+    <!-- <th>提出日</th> -->
     <th>プレビュー</th>
     <th>フィードバック</th>
     <th>コメント</th>
@@ -47,7 +47,7 @@
       <% reports.each do |r| %>
           <tr>
             <td><%= r.task_title %></td>
-            <td><%= r.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+            <!-- <td><%= r.updated_at.strftime('%Y-%m-%d %H:%M:%S') %></td> -->
             <td><%= link_to 'プレビュー', preview_path(r), target: '_blank' %></td>
             <td><%= r.ta_comment %></td>
             <td><%= r.student_comment %></td>
