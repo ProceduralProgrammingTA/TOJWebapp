@@ -19,15 +19,15 @@ judge() {
   timeout 1 /$studentname/a.out "$@" < /$taskname/in$case > /$studentname/stdout$case 2> /$studentname/stderr$case
   exit_status=$?
   if [ $exit_status -eq 124 ] ; then
-    echo TLE
+    echo Time Limit Exceeded
   elif [ $exit_status -ne 0 ] ; then
     echo Runtime Error
     cat /$studentname/stderr$case
   elif diff -wB /$studentname/stdout$case /$taskname/out$case > /dev/null 2>&1 ; then
-    echo OK
+    echo Accept
   else
-    echo NG
-    echo output:
+    echo Wrong Answer
+    echo your output:
     shrink /$studentname/stdout$case "++ Output is shrinked because it is too large. ++"
     echo expected:
     shrink /$taskname/out$case "++ Output is shrinked because it is too large. ++"
@@ -37,7 +37,7 @@ judge() {
 [ -f /$studentname/a.out ] && rm /$studentname/a.out
 [ -f /$studentname/stdout1 ] && rm /$studentname/stdout*
 
-timeout 10 gcc -O2 -lm -std=gnu89 -Wall -Wvla -Wdeclaration-after-statement /$studentname/submission.c -o /$studentname/a.out 2> /$studentname/compile_stderr
+timeout 10 gcc -O2 -lm -std=gnu89 -Wall -Wextra -Wvla -Wdeclaration-after-statement /$studentname/submission.c -o /$studentname/a.out 2> /$studentname/compile_stderr
 
 compile_status=$?
 if [ $compile_status -ne 0 ] ; then
@@ -51,6 +51,6 @@ elif [ "$(grep warning /$studentname/compile_stderr)" != "" ] ; then
   exit
 fi
 
-for i in 1 2 3 4 ; do
+for i in {1..4} ; do
   judge $i
 done
