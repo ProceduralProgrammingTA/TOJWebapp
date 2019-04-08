@@ -1,4 +1,4 @@
-FROM mysql:latest
+FROM mysql:5.7
 
 RUN sed -i.bak -e "s%http://archive.ubuntu.com/ubuntu/%http://ftp.jaist.ac.jp/pub/Linux/ubuntu/%g" /etc/apt/sources.list
 
