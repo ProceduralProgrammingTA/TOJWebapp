@@ -24,7 +24,7 @@ judge() {
     echo Runtime Error
     cat /$studentname/stderr$case
   elif diff -wB /$studentname/stdout$case /$taskname/out$case > /dev/null 2>&1 ; then
-    echo Accept
+    echo Accepted
   else
     echo Wrong Answer
     echo your output:
