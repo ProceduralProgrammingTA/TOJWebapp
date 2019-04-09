@@ -2,8 +2,15 @@ class SubmissionsController < ApplicationController
   before_action :authenticate_student!
   def create
     submission_param = params.require(:submission).permit(:code, :ta_comment, :ta_check)
-    # 2017/Apr/7 apply force_encoding
-    upload_file = submission_param[:code].read.force_encoding('utf-8')
+
+    upload_file = ''
+    unless submission_param[:code].nil? then
+      upload_file = submission_param[:code].read.force_encoding('utf-8')
+      unless upload_file.valid_encoding? then
+        upload_file = '// ++ Submitted file was not UTF-8 text. Please submit UTF-8 text file. ++'
+      end
+    end
+
     @task = Task.find(params[:task_id])
     @submission = @task.submissions.build(submission_param)
     current_student.submissions << @submission
