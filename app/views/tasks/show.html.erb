@@ -19,7 +19,7 @@
     <%= f.label :code, :value => "ソースコード" %><br>
     <div class="form-group">
       <div class="input-group">
-        <%= f.file_field :code, :style => 'display: none;' %>
+        <%= f.file_field :code, :style => 'display: none;', :required => true %>
         <span class="input-group-btn">
           <button class="btn btn-default" type="button" onclick="$('#submission_code').click();"><img src="/assets/images/fileopen.png" style="height: 24px;"></button>
         </span>
