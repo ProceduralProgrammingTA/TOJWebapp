@@ -45,7 +45,8 @@ module QueueServices
 
       cmd = "docker run -v /data/submissions/#{@submission.id}:/#{student_name} -v /data/tasks/#{task_id}:/#{task_title}:ro 'gcc:latest' bash -c \"bash /#{task_title}/test.sh #{student_name} #{task_title}\""
       o, e, s = Open3.capture3(cmd)
-      @submission.message = o.to_s + e.to_s
+      # @submission.message = o.to_s + e.to_s
+      @submission.message = o.to_s
       @submission.message = @submission.message.gsub(/\r\n/, "\n") rescue "Invalid Output"
       @submission.status = begin
         case
@@ -53,8 +54,8 @@ module QueueServices
           when o.to_s.include?('Compile Error'); 'CE'
           when o.to_s.include?('Compile Warning'); 'CW'
           when o.to_s.include?('Runtime Error'); 'RE'
-          when o.to_s.include?('NG');  'WA'
-          when o.to_s.include?('TLE'); 'TLE'
+          when o.to_s.include?('Wrong Answer');  'WA'
+          when o.to_s.include?('Time Limit Exceeded'); 'TLE'
           else 'AC'
         end
       end
