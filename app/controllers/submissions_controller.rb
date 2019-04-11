@@ -3,15 +3,19 @@ class SubmissionsController < ApplicationController
   def create
     submission_param = params.require(:submission).permit(:code, :ta_comment, :ta_check)
 
-    upload_file = ''
-    unless submission_param[:code].nil? then
-      upload_file = submission_param[:code].read.force_encoding('utf-8')
-      unless upload_file.valid_encoding? then
-        upload_file = '// ++ Submitted file was not UTF-8 text. Please submit UTF-8 text file. ++'
-      end
+    @task = Task.find(params[:task_id])
+
+    if submission_param[:code].nil? then
+      redirect_to task_path(@task), alert: 'ファイルが選択されていません．'
+      return
     end
 
-    @task = Task.find(params[:task_id])
+    upload_file = submission_param[:code].read.force_encoding('utf-8')
+    unless upload_file.valid_encoding? then
+      redirect_to task_path(@task), alert: 'ファイルの文字コードは UTF-8 で提出してください．'
+      return
+    end
+
     @submission = @task.submissions.build(submission_param)
     current_student.submissions << @submission
     @submission.code = upload_file
