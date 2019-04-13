@@ -15,8 +15,10 @@ shrink() {
 judge() {
   case=$1
   shift
+  args="$@"
   echo [case${case}]
-  timeout 1 /$studentname/a.out "$@" < /$taskname/in$case > /$studentname/stdout$case 2> /$studentname/stderr$case
+  su - user_student -c "timeout 1 /$studentname/a.out $args < /$taskname/in$case > /$studentname/stdout$case 2> /$studentname/stderr$case"
+  # timeout 1 /$studentname/a.out "$@" < /$taskname/in$case > /$studentname/stdout$case 2> /$studentname/stderr$case
   exit_status=$?
   if [ $exit_status -eq 124 ] ; then
     echo Time Limit Exceeded
@@ -50,6 +52,8 @@ elif [ "$(grep warning /$studentname/compile_stderr)" != "" ] ; then
   shrink /$studentname/compile_stderr "++ Error message from compiler is shrinked because it is too large. ++"
   exit
 fi
+
+useradd user_student
 
 for i in {1..4} ; do
   judge $i
