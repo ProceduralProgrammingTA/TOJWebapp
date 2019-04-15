@@ -17,7 +17,7 @@
       <div id="tab_home" class="tab-pane active"><br>
         <%= link_to 'パスワードの変更', edit_student_registration_path, :class => 'btn btn-primary btn-lg', :style => 'width: 30%;'%><br><br>
         <%= link_to 'ログアウト', destroy_student_session_path, method: :delete, :class => 'btn btn-danger btn-lg', :style => 'width: 30%'%><br><br>
-        <%= link_to 'ヘルプページ（仮）', "https://riantkb.github.io/", :class => 'btn btn-success btn-lg', :style => 'width: 30%'%><br>
+        <%= link_to 'ヘルプページ（仮）', "https://riantkb.github.io/procprog/", :class => 'btn btn-success btn-lg', :style => 'width: 30%', :target => '_blank' %><br>
       </div>
       <div id="tab_prob" class="tab-pane"><br>
         <%= render partial: 'layouts/problem_tab' %>
