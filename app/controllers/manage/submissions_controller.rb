@@ -2,7 +2,8 @@ class Manage::SubmissionsController < ApplicationController
   before_action :authenticate_admin!
   def index
     @student = Student.find(params[:student_id])
-    @submissions = @student.submissions.group('task_id')
+    # @submissions = @student.submissions.group('task_id')
+    @submissions = @student.submissions
   end
 
   def show
