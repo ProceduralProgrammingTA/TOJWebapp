@@ -10,6 +10,7 @@ class HomeController < ApplicationController
     end
 
     current_student_submissions = submissions
+      .where(submissions[:student_id].eq(current_student.id))
       .where(submissions[:created_at].in(submission_time))
       .project(Arel.star)
       .as('submissions')
