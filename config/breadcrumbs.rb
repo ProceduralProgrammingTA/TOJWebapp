@@ -18,6 +18,11 @@ crumb :student_task_submissions do
   parent :student_root
 end
 
+crumb :show_task_ranking do
+  link "課題別ランキング", task_rankings_path
+  parent :student_root
+end
+
 crumb :show_student_task_submission do
   link "提出履歴詳細", task_submission_path
   parent :student_task_submissions

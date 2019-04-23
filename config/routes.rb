@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'submissions/:id/status' => 'submissions#status'
     resources :submissions
   end
+  resources :task_rankings
 
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
