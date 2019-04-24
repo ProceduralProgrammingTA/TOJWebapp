@@ -40,6 +40,9 @@ class SubmissionsController < ApplicationController
 
   def show
     @submission = Submission.find(params[:id])
+    unless @submission.student_id == current_student.id then
+      raise ActionController::RoutingError, with: :rescue_404
+    end
     @current_task = Task.find(@submission.task_id)
     @task_title = @current_task.title
     @code = @submission.code.to_s
