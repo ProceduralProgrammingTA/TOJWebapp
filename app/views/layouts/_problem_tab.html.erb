@@ -8,6 +8,7 @@
     <th>TAチェック</th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
   </thead>
   <tbody>
@@ -41,6 +42,7 @@
         <% end %>
         <td><%= link_to '提出する', task %></td>
         <td><%= link_to '提出履歴', task_submissions_path(task) %></td>
+        <td><%= link_to '順位表', task_ranking_path(task) %></td>
       </tr>
   <% end %>
   </tbody>
