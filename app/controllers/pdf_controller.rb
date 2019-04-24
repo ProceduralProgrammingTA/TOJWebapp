@@ -1,4 +1,5 @@
 class PdfController < ApplicationController
+  before_action :authenticate_student!
   def show
     report = Report.find(params[:report_id])
     if admin_signed_in?

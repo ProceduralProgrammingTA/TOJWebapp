@@ -1,4 +1,5 @@
 class Manage::ReportsController < ApplicationController
+  before_action :authenticate_admin!
   def show
     @student = Student.find(params[:student_id])
     # @submission = Submission.find(params[:id])
