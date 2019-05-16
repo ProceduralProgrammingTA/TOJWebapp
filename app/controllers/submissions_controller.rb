@@ -10,6 +10,13 @@ class SubmissionsController < ApplicationController
       return
     end
 
+    file_lim = 60000
+
+    if submission_param[:code].size > file_lim then
+      redirect_to task_path(@task), alert: 'ファイルの容量が大きすぎます (%d Byte)．' % submission_param[:code].size
+      return
+    end
+
     upload_file = submission_param[:code].read.force_encoding('utf-8')
     unless upload_file.valid_encoding? then
       redirect_to task_path(@task), alert: 'ファイルの文字コードは UTF-8 で提出してください．'
