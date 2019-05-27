@@ -29,7 +29,7 @@ judge() {
     accepted=0
     cat /$studentname/stderr$case
   else
-    score=`/$studentname/judge.exe /$taskname/in$case /$studentname/stdout$case`
+    score=`/$taskname/judge.exe /$taskname/in$case /$studentname/stdout$case`
     judge_status=$?
     if [ $judge_status -ne 0 ] ; then
       echo Wrong Answer
@@ -58,8 +58,6 @@ elif [ "$(grep warning /$studentname/compile_stderr)" != "" ] ; then
   shrink /$studentname/compile_stderr "++ Error message from compiler is shrinked because it is too large. ++"
   exit
 fi
-
-g++ -O2 -std=c++17 /$taskname/judge.cpp -o /$studentname/judge.exe
 
 for i in {1..4} ; do
   judge $i

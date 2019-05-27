@@ -43,6 +43,11 @@ module QueueServices
 
       require 'open3'
 
+      task = Task.find(task_id)
+      if task.is_scoring then
+        Open3.capture3("g++ -O2 -std=c++14 /data/tasks/#{task_id}/judge.cpp -o /data/tasks/#{task_id}/judge.exe")
+      end
+
       cmd = "docker run -v /data/submissions/#{@submission.id}:/#{student_name} -v /data/tasks/#{task_id}:/#{task_title}:ro 'gcc:latest' bash -c \"bash /#{task_title}/test.sh #{student_name} #{task_title}\""
       o, e, s = Open3.capture3(cmd)
       # @submission.message = o.to_s + e.to_s
