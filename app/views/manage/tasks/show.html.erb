@@ -9,8 +9,11 @@
   <thead>
   <tr>
     <th>名前</th>
-    <th>提出日</th>
+    <th>提出日時</th>
     <th>実行結果</th>
+    <% if @task.is_scoring %>
+      <th>得点</th>
+    <% end %>
     <th>TAチェック</th>
     <th colspan="1"></th>
   </tr>
@@ -29,6 +32,9 @@
                 <td> <%= student.name %> </td>
                 <td> <%= student_submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %> </td>
                 <td> <%= student_submission.status.nil? ? 'NG' : student_submission.status %> </td>
+          <% end %>
+          <% if @task.is_scoring %>
+                <td> <%= student_submission.score.nil? ? '-' : number_with_delimiter(student_submission.score) %> </td>
           <% end %>
             <% case student_submission.ta_check %>
             <% when 0 then %>

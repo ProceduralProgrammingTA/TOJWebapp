@@ -5,6 +5,9 @@
     <tr>
       <th>順位</th>
       <th>名前</th>
+      <% if @task.is_scoring %>
+        <th>得点</th>
+      <% end %>
       <th>初AC時刻</th>
     </tr>
   </thead>
@@ -17,15 +20,16 @@
             <tr class="success">
               <td><%= rank %></td>
               <td><%= student.name %></td>
-              <td><%= student.submission_created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
-            </tr>
           <% else %>
             <tr>
               <td><%= rank %></td>
               <td><%= masked_student_name(student.name) %></td>
+          <% end %>
+          <% if @task.is_scoring %>
+              <td> <%= number_with_delimiter(student.submission_score) %> </td>
+          <% end %>
               <td><%= student.submission_created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
             </tr>
-          <% end %>
           <% rank += 1 %>
         <% end %>
       <% end %>

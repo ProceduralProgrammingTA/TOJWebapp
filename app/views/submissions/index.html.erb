@@ -5,6 +5,9 @@
   <tr>
     <th>実行結果</th>
     <th>提出日時</th>
+    <% if @task.is_scoring %>
+      <th>得点</th>
+    <% end %>
     <th>TAのコメント</th>
     <th>TAチェック</th>
     <th>詳細</th>
@@ -16,6 +19,9 @@
           <tr>
             <%= show_status_td submission %>
             <td><%= submission.created_at.strftime('%Y-%m-%d %H:%M:%S') %></td>
+          <% if @task.is_scoring %>
+            <td> <%= submission.score.nil? ? '-' : number_with_delimiter(submission.score) %> </td>
+          <% end %>
             <td><%= submission.ta_comment %></td>
             <% case submission.ta_check %>
             <% when 0 then %>

@@ -6,6 +6,9 @@
 
     <%= f.label :deadline, :value => '締め切り'%><br>
     <%= f.datetime_select :deadline, :stat_year => 2017, :end_year => 2020, :minute_step => 5 %><br><br>
+    <div class="field">
+      <%= f.check_box :is_scoring, {}, true, false %> <%= f.label :is_scoring, :value => 'スコア問題' %>
+    </div>
 
     <%= f.label :description, :value => '問題の詳細' %><br>
     <p>Mark Down 形式に対応しています．入力例は下を参照．</p>

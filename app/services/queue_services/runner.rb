@@ -61,6 +61,13 @@ module QueueServices
       end
       @submission.is_completed = true
       @submission.is_accepted = @submission.status == 'AC'
+      if @submission.is_accepted then
+        # matches "[ Total Score: \d+ ]"
+        scores = o.to_s.scan(/^\[ Total Score: (\d+) \]$/).flatten.map &:to_i
+        if scores.length == 1 then
+          @submission.score = scores[0]
+        end
+      end
       @submission.save
     end
   end
