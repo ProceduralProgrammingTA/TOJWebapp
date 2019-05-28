@@ -9,6 +9,7 @@ create_table "submissions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHA
   t.integer  "ta_check",     limit: 4,   default: 0
   t.string   "ta_comment",   limit: 255
   t.string   "status",       limit: 255
+  t.integer  "score",        limit: 4
   t.boolean  "is_completed",             default: false
 end
 

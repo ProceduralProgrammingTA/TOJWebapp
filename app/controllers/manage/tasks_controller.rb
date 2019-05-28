@@ -10,7 +10,7 @@ class Manage::TasksController < ApplicationController
   end
 
   def create
-    task_params = params.require(:task).permit(:title, :deadline, :description)
+    task_params = params.require(:task).permit(:title, :deadline, :description, :is_scoring)
     @task = Task.create(task_params)
 
     filepath = "/data/tasks/#{@task.id}"
@@ -50,7 +50,7 @@ class Manage::TasksController < ApplicationController
 
   def update
     @task = Task.find(params[:id])
-    task_params = params.require(:task).permit(:title, :deadline, :description, :is_public)
+    task_params = params.require(:task).permit(:title, :deadline, :description, :is_public, :is_scoring)
     if @task.update(task_params)
       redirect_to manage_task_url(@task), notice: 'Task was successfully updated'
     else

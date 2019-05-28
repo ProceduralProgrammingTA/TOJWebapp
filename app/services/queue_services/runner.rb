@@ -43,6 +43,8 @@ module QueueServices
 
       require 'open3'
 
+      Open3.capture3("[ -f /data/tasks/#{task_id}/judge.cpp ] && g++ -O2 -std=c++14 /data/tasks/#{task_id}/judge.cpp -o /data/tasks/#{task_id}/judge.exe")
+
       cmd = "docker run -v /data/submissions/#{@submission.id}:/#{student_name} -v /data/tasks/#{task_id}:/#{task_title}:ro 'gcc:latest' bash -c \"bash /#{task_title}/test.sh #{student_name} #{task_title}\""
       o, e, s = Open3.capture3(cmd)
       # @submission.message = o.to_s + e.to_s
@@ -61,6 +63,13 @@ module QueueServices
       end
       @submission.is_completed = true
       @submission.is_accepted = @submission.status == 'AC'
+      if @submission.is_accepted then
+        # matches "[ Total Score: \d+ ]"
+        scores = o.to_s.scan(/^\[ Total Score: (\d+) \]$/).flatten.map &:to_i
+        if scores.length == 1 then
+          @submission.score = scores[0]
+        end
+      end
       @submission.save
     end
   end
