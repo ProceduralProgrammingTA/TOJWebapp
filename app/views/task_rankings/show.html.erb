@@ -7,8 +7,10 @@
       <th>名前</th>
       <% if @task.is_scoring %>
         <th>得点</th>
+        <th>AC時刻</th>
+      <% else %>
+        <th>初AC時刻</th>
       <% end %>
-      <th>初AC時刻</th>
     </tr>
   </thead>
   <% unless @students.nil? %>
