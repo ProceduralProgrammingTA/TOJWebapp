@@ -4,6 +4,12 @@ class ReportsController < ApplicationController
   before_action :authenticate_student!
   def create
     reports_param = params.require(:report).permit(:task_title, :file, :file_name, :student_comment)
+
+    if reports_param[:file].nil? then
+      redirect_to root_path, alert: 'ファイルが選択されていません．'
+      return
+    end
+
     @report = current_student.reports.build(reports_param)
     file = reports_param[:file]
     file_name = "#{current_student.name}.pdf"
