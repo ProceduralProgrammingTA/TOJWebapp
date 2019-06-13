@@ -16,6 +16,8 @@ Rails.application.routes.draw do
 
   namespace :manage do
     root :to => 'manage#index'
+    get 'export/ac' => 'manage#export_ac'
+    get 'export/ta_check' => 'manage#export_tacheck'
     resources :tasks do
       post 'toggle_public' => 'tasks#togglePublic'
       post 'rejudge' => 'tasks#rejudge'
