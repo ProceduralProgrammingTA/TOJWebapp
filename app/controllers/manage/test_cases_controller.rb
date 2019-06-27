@@ -73,9 +73,9 @@ class Manage::TestCasesController < ApplicationController
       end
     end
     if faileds.empty?
-      redirect_to manage_task_test_cases_path(@task), alert: "読み込みに失敗したケースがありました\n#{faileds}"
-    else
       redirect_to manage_task_test_cases_path(@task), notice: '読み込みが完了しました'
+    else
+      redirect_to manage_task_test_cases_path(@task), alert: "読み込みに失敗したケースがありました\n#{faileds}"
     end
   end
 end
