@@ -63,14 +63,19 @@ class Manage::TestCasesController < ApplicationController
 
   def load_file
     @task = Task.find(params[:task_id])
+    faileds = []
     file_path = "/data/tasks/#{@task.id}/*"
     Dir.glob(file_path).each do |file_name|
       name = File.basename(file_name)
       testcase = @task.test_cases.build(file_name: name)
       unless testcase.save
-        redirect_to manage_task_test_cases_path(@task), alert: '読み込みに失敗しました'
+        faileds << name
       end
     end
-    redirect_to manage_task_test_cases_path(@task), notice: '読み込みが完了しました'
+    if faileds.empty?
+      redirect_to manage_task_test_cases_path(@task), alert: "読み込みに失敗したケースがありました\n#{faileds}"
+    else
+      redirect_to manage_task_test_cases_path(@task), notice: '読み込みが完了しました'
+    end
   end
 end
