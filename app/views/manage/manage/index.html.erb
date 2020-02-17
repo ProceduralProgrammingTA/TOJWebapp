@@ -21,8 +21,10 @@
           <%= link_to '学生一覧', manage_students_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
           <%= link_to '課題一覧', manage_tasks_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
           <%= link_to '新規課題作成', new_manage_task_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br>
-          <%= link_to '新規学生登録', new_manage_student_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %>
-        </div>
+          <%= link_to '新規学生登録', new_manage_student_path, :class => 'btn btn-primary btn-lg', :style => 'width: 50%' %><br><br><br>
+          <%= button_to 'Export ACs', "/manage/export/ac", method: :get, :class => 'btn btn-success btn-lg', :style => 'width: 50%' %><br>
+          <%= button_to 'Export TA Checks', "/manage/export/ta_check", method: :get, :class => 'btn btn-success btn-lg', :style => 'width: 50%' %>
+          </div>
       </div>
     </div>
 <% else %>

@@ -11,19 +11,24 @@
       <li>
         <a href="#tab_reports" data-toggle="tab">レポート提出</a>
       </li>
+      <li>
+        <a href="#tab_help" data-toggle="tab">ヘルプページ（仮）</a>
+      </li>
     </ul>
 
     <div class="tab-content">
       <div id="tab_home" class="tab-pane active"><br>
         <%= link_to 'パスワードの変更', edit_student_registration_path, :class => 'btn btn-primary btn-lg', :style => 'width: 30%;'%><br><br>
-        <%= link_to 'ログアウト', destroy_student_session_path, method: :delete, :class => 'btn btn-danger btn-lg', :style => 'width: 30%'%><br><br>
-        <%= link_to 'ヘルプページ（仮）', "https://riantkb.github.io/procprog/", :class => 'btn btn-success btn-lg', :style => 'width: 30%', :target => '_blank' %><br>
+        <%= link_to 'ログアウト', destroy_student_session_path, method: :delete, :class => 'btn btn-danger btn-lg', :style => 'width: 30%'%>
       </div>
       <div id="tab_prob" class="tab-pane"><br>
         <%= render partial: 'layouts/problem_tab' %>
       </div>
       <div id="tab_reports" class="tab-pane"><br>
         <%= render partial: 'layouts/report_tab' %>
+      </div>
+      <div id="tab_help" class="tab-pane"><br>
+        <%= render partial: 'layouts/help_tab' %>
       </div>
     </div>
 <% else %>

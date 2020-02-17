@@ -1,6 +1,12 @@
 class HomeController < ApplicationController
   before_action :authenticate_student!
   def index
+    help_file_path = Rails.root.join('file_templates', 'help.md')
+    @help_md = ''
+    File.open(help_file_path, 'r') do |f|
+      @help_md = f.read()
+    end
+
     submissions = Submission.arel_table
     tasks = Task.arel_table
 
