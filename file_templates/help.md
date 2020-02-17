@@ -31,7 +31,7 @@ TOJ では **コンパイルで警告が出るコードはジャッジが行わ�
 提出されたプログラムは、特記されていない限り以下のコンパイラ、及びオプションでコンパイルされます。
 
 ## コンパイラ
-gcc (GCC) 8.3.0
+gcc (GCC) 8.3.0 __TODO: 確認する__
 
 ## コンパイルオプション
 以下のコンパイルオプションが用いられます。
@@ -43,7 +43,7 @@ gcc -O2 -lm -std=gnu89 -Wall -Wextra -Wvla -Wdeclaration-after-statement
 （計算機室の Mac でコンパイルを行う場合、 `gcc` と打つと clang が起動するので、代わりに以下のコマンドでコンパイルをすることをお勧めします）
 
 ```sh
-gcc-8 -O2 -lm -std=gnu89 -Wall -Wextra -Wvla -Wdeclaration-after-statement
+gcc-9 -O2 -lm -std=gnu89 -Wall -Wextra -Wvla -Wdeclaration-after-statement
 ```
 
 - この授業で認められる C 言語は「 [ANSI C](https://ja.wikipedia.org/wiki/ANSI_C) (`C89`) + 一行コメント (`// comment`) 」になります。
