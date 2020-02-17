@@ -38,6 +38,7 @@ judge() {
 
 [ -f /$studentname/a.out ] && rm /$studentname/a.out
 [ -f /$studentname/stdout1 ] && rm /$studentname/stdout*
+[ -f /$studentname/stderr1 ] && rm /$studentname/stderr*
 
 timeout 10 gcc -O2 -lm -std=gnu89 -Wall -Wextra -Wvla -Wdeclaration-after-statement /$studentname/submission.c -o /$studentname/a.out 2> /$studentname/compile_stderr
 
@@ -56,3 +57,7 @@ fi
 for i in {1..4} ; do
   judge $i
 done
+
+[ -f /$studentname/a.out ] && rm /$studentname/a.out
+[ -f /$studentname/stdout1 ] && rm /$studentname/stdout*
+[ -f /$studentname/stderr1 ] && rm /$studentname/stderr*
