@@ -1,6 +1,17 @@
 
 $.turbo.use 'turbolinks:render', 'turbolinks:request-start'
 
+$ ->
+  loadMathJax()
+  $(document).on 'turbolinks:load', loadMathJax
+
+loadMathJax = ->
+  window.MathJax = null
+  $.getScript "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML", ->
+    MathJax.Hub.Config
+      tex2jax: { inlineMath: [['$','$']] }
+
+
 ###
 statusReload = (el, taskId, submissionId) ->
   $.get "/tasks/#{taskId}/submissions/#{submissionId}/status.json", {}, (data) ->
