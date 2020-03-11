@@ -54,8 +54,10 @@ elif [ "$(grep warning /$studentname/compile_stderr)" != "" ] ; then
   exit
 fi
 
-for i in {1..4} ; do
-  judge $i
+for i in {1..99} ; do
+  if [ -f /$taskname/in$i ] ; then
+    judge $i
+  fi
 done
 
 [ -f /$studentname/a.out ] && rm /$studentname/a.out
