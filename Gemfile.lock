@@ -30,6 +30,10 @@ GEM
       activemodel (= 4.2.8)
       activesupport (= 4.2.8)
       arel (~> 6.0)
+    activerecord-mysql-awesome (0.0.9)
+      activerecord (~> 4.0)
+      activesupport (~> 4.0)
+      mysql2 (>= 0.3.18)
     activesupport (4.2.8)
       i18n (~> 0.7)
       minitest (~> 5.1)
@@ -86,13 +90,15 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
-    mini_portile2 (2.3.0)
+    mini_portile2 (2.8.0)
     minitest (5.10.2)
     multi_json (1.12.1)
     mysql2 (0.4.10)
-    nokogiri (1.8.2)
-      mini_portile2 (~> 2.3.0)
+    nokogiri (1.13.9)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
+    racc (1.6.0)
     rack (1.6.5)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -178,6 +184,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-mysql-awesome
   byebug
   coderay
   coffee-rails (~> 4.1.0)
