@@ -7,7 +7,7 @@
     </div><br>
 
     <%= f.label :deadline, :value => '締め切り'%><br>
-    <%= f.datetime_select :deadline, :stat_year => 2017, :end_year => 2020, :minute_step => 5 %><br><br>
+    <%= f.datetime_select :deadline, :minute_step => 5 %><br><br>
 
     <div class="field">
       <%= f.check_box :is_public, {}, true, false %> <%= f.label :is_public, :value => '公開' %>
