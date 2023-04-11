@@ -93,4 +93,20 @@ class Manage::ManageController < ApplicationController
 
     send_data csv_data, filename: 'exported_ac.csv', type: 'text/csv'
   end
+  def import_students
+    seed_file = params[:file]
+    created_students = []
+    all_cnt = 0
+    require 'csv'
+    CSV.foreach(seed_file.path) do |row|
+      name = row[0]
+      password = row[1]
+      student = Student.new(name: name, password: password)
+      all_cnt += 1
+      if student.save
+        created_students << name
+      end
+    end
+    redirect_to manage_students_path, notice: "学生の作成が完了しました (#{created_students.length}/#{all_cnt})"
+  end
 end

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     root :to => 'manage#index'
     get 'export/ac' => 'manage#export_ac'
     get 'export/ta_check' => 'manage#export_tacheck'
+    post 'import/students' => 'manage#import_students'
     resources :tasks do
       post 'toggle_public' => 'tasks#togglePublic'
       post 'rejudge' => 'tasks#rejudge'
