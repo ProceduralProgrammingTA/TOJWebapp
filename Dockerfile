@@ -5,7 +5,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             nodejs \
             build-essential \
-            mysql-client \
+            default-mysql-client \
             gcc make wget \
     && rm -rf /var/lib/apt/lists/*
 
